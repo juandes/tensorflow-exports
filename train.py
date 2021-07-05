@@ -11,6 +11,8 @@ df = pd.read_csv("data/df.csv")
 X_train = df['steps']
 y_train = df['distance']
 
+print(df)
+
 log_dir = "/tmp/tensorboard/{}".format(ts)
 tensorboard_callback = tf.keras.callbacks.TensorBoard(
     log_dir=log_dir, histogram_freq=1)
@@ -22,12 +24,12 @@ model = tf.keras.Sequential([
 
 model.compile(
     optimizer=tf.optimizers.Adam(learning_rate=0.1),
-    loss='mean_absolute_error',
-    metrics='mean_absolute_error')
+    loss='mse',
+    metrics='mse')
 
 model.fit(
     X_train, y_train,
-    epochs=13,
+    epochs=25,
     callbacks=[tensorboard_callback]
 )
 
